@@ -57,13 +57,29 @@
         }
       }
     },
+    "ProductResponse" : {
+      "properties" : {
+        "idproduct" : {
+          "type" : "string"
+        }
+      }
+    },
     "OrdersResponse" : {
       "properties" : {
         "numorder" : {
           "type" : "number"
         },
+        "idorder" : {
+          "type" : "string",
+          "description" : "A UUID that identifies this order"
+        },
+        "date" : {
+          "type" : "string",
+          "description" : "Date in ISO-8651 format (2007-03-01T13:00:00Z)"
+        },
         "products" : {
           "type" : "array",
+          "description" : "List of products that compose this order",
           "items" : {
             "$ref" : "#/definitions/#definitions/ProductResponse"
           }

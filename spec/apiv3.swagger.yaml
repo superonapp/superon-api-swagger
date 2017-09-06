@@ -55,17 +55,24 @@ definitions:
   ProductResponse:
     properties:
       idproduct: 
-        type: uuid
+        type: string
   OrdersResponse:
     properties: 
       numorder:
         type: number
       idorder:
-        type: uuid
+        type: string
+        description: "A UUID that identifies this order"
       date:
-        type: date
-        description: Date in ISO-8651 format (2007-03-01T13:00:00Z)
+        type: string
+        description: "Date in ISO-8651 format (2007-03-01T13:00:00Z)"
       products:
         type: "array"
+        description: "List of products that compose this order"
         items:
-          $ref: "#definitions/ProductResponse"
+            $ref: "#definitions/ProductResponse"
+            
+            
+            
+            
+            
