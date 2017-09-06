@@ -2,14 +2,19 @@ swagger: '2.0'
 info:
   version: 3.0.0
   title: SuperOn API
+  
   description:
-    "This API allows access to SuperOn's e-commerce platform. For more information on SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.
+    This API allows access to SuperOn's e-commerce platform. 
     
-    This API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. "
+    This API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. 
+    
+    For more information about SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.
+    
   license: 
     name: Superon API Terms of Use
     url: 'http://lifeapps.com.br/superon/api-usage-license'
-  
+  contact:
+    email: contato@lifeapps.com.br
 host: 'superon.lifeapps.com.br:3000'
 basePath: '/api/v3'
 
@@ -38,10 +43,20 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   '/price/batch':
-    get:
+    post:
       tags:
         - "Configuration"
       description: 'Provides batch update for prices on a certain supplier'
+      parameters:
+       - name: body
+         in: body
+         required: true
+         description: A batch for price update. This should contain at least one item. This is an async operation and will process in some moment in the future.
+         schema:
+          $ref: '#/definitions/PriceBatchRequest'
+            
+        
+            
       responses:
         '200':
           description: Success
@@ -60,13 +75,10 @@ securityDefinitions:
     in: header
     description: >
       For accessing the API a valid JWT (jwt.io) token must be passed in all the
-      queries in
-
-      the 'Authorization' header. If you need a JWT token, mail
-      contato@lifeapps.com.br\n\n
-
-      The following syntax must be used in the 'Authorization' header :
-          Bearer xxxxxx.yyyyyyy.zzzzzz 
+      queries in the 'Authorization' header. If you need a JWT token, mail
+      contato@lifeapps.com.br for further instructions
+      The following syntax must be used in the 'Authorization' header 
+          "Bearer xxxxxx.yyyyyyy.zzzzzz"
 definitions:
   SimpleOk:
     properties:
@@ -102,7 +114,31 @@ definitions:
         description: "List of products that compose this order"
         items:
             $ref: "#/definitions/ProductResponse"
-            
+  PriceBatchRequest:
+    properties:
+      notes:
+        type: string
+        description: An arbitrary non mandatory note about this price update
+      items:
+        type: array
+        minimum: 1
+        items:
+          $ref: '#/definitions/PriceBatchItemRequest'
+  PriceBatchItemRequest:
+    description: Represents a price update for that product. Send EITHER the internalcode or the barcode. If a product has a barcode, that should be used.
+    properties:
+      internalcode:
+        type: number
+        description: A product internal code. This exists for products that do not have a common barcode
+      barcode:
+        type: number
+        description: A product barcode
+      price:
+        type: number
+        description: Product new price
+      availablefororder:
+        type: boolean
+        description: Determines if this product should be made available for final consumers (true) or if it should be hidden and made unavailable until further updates
             
             
             

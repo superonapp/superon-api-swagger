@@ -1,9 +1,12 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "This API allows access to SuperOn's e-commerce platform. For more information on SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.\nThis API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. ",
+    "description" : "This API allows access to SuperOn's e-commerce platform.\nThis API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version.\nFor more information about SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.",
     "version" : "3.0.0",
     "title" : "SuperOn API",
+    "contact" : {
+      "email" : "contato@lifeapps.com.br"
+    },
     "license" : {
       "name" : "Superon API Terms of Use",
       "url" : "http://lifeapps.com.br/superon/api-usage-license"
@@ -38,10 +41,18 @@
       }
     },
     "/price/batch" : {
-      "get" : {
+      "post" : {
         "tags" : [ "Configuration" ],
         "description" : "Provides batch update for prices on a certain supplier",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "A batch for price update. This should contain at least one item. This is an async operation and will process in some moment in the future.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/PriceBatchRequest"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "Success",
@@ -120,6 +131,41 @@
           }
         }
       }
+    },
+    "PriceBatchRequest" : {
+      "properties" : {
+        "notes" : {
+          "type" : "string",
+          "description" : "An arbitrary non mandatory note about this price update"
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceBatchItemRequest"
+          }
+        }
+      }
+    },
+    "PriceBatchItemRequest" : {
+      "properties" : {
+        "internalcode" : {
+          "type" : "number",
+          "description" : "A product internal code. This exists for products that do not have a common barcode"
+        },
+        "barcode" : {
+          "type" : "number",
+          "description" : "A product barcode"
+        },
+        "price" : {
+          "type" : "number",
+          "description" : "Product new price"
+        },
+        "availablefororder" : {
+          "type" : "boolean",
+          "description" : "Determines if this product should be made available for final consumers (true) or if it should be hidden and made unavailable until further updates"
+        }
+      },
+      "description" : "Represents a price update for that product. Send EITHER the internalcode or the barcode. If a product has a barcode, that should be used."
     }
   }
 }
