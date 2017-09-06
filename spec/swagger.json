@@ -1,87 +1,95 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "version" : "0.0.1",
-    "title" : "Superon API"
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Superon API"
   },
-  "host" : "superon.lifeapps.com.br:3000",
-  "basePath" : "/api/v3",
-  "schemes" : [ "http" ],
-  "consumes" : [ "application/json" ],
-  "produces" : [ "application/json" ],
-  "paths" : {
-    "/orders/ready-to-deliver" : {
-      "get" : {
-        "description" : "Returns orders in the state \"Ready to Deliver\"",
-        "operationId" : "get-all-orders-ready-to-deliver",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Success",
-            "schema" : {
-              "$ref" : "#/definitions/OrdersResponse"
+  "host": "superon.lifeapps.com.br:3000",
+  "basePath": "/api/v3",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/orders/ready-to-deliver": {
+      "get": {
+        "description": "Returns orders in the state \"Ready to Deliver\"",
+        "operationId": "get-all-orders-ready-to-deliver",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/OrdersResponse"
             }
           },
-          "default" : {
-            "description" : "Error",
-            "schema" : {
-              "$ref" : "#/definitions/ErrorResponse"
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
       }
     },
-    "/swagger" : {
-      "x-swagger-pipe" : "swagger_raw"
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
     }
   },
-  "securityDefinitions" : {
-    "Bearer" : {
-      "type" : "apiKey",
-      "name" : "Authorization",
-      "in" : "header"
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "For accessing the API a valid JWT (jwt.io) token must be passed in all the queries in\nthe 'Authorization' header. If you need a JWT token, mail contato@lifeapps.com.br\\n\\n\nThe following syntax must be used in the 'Authorization' header :\n    Bearer xxxxxx.yyyyyyy.zzzzzz \n"
     }
   },
-  "definitions" : {
-    "ErrorResponse" : {
-      "required" : [ "message" ],
-      "properties" : {
-        "message" : {
-          "type" : "string"
+  "definitions": {
+    "ErrorResponse": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
         },
-        "code" : {
-          "type" : "number"
+        "code": {
+          "type": "number"
         },
-        "cause" : {
-          "type" : "string"
+        "cause": {
+          "type": "string"
         }
       }
     },
-    "ProductResponse" : {
-      "properties" : {
-        "idproduct" : {
-          "type" : "string"
+    "ProductResponse": {
+      "properties": {
+        "idproduct": {
+          "type": "string"
         }
       }
     },
-    "OrdersResponse" : {
-      "properties" : {
-        "numorder" : {
-          "type" : "number"
+    "OrdersResponse": {
+      "properties": {
+        "numorder": {
+          "type": "number"
         },
-        "idorder" : {
-          "type" : "string",
-          "description" : "A UUID that identifies this order"
+        "idorder": {
+          "type": "string",
+          "description": "A UUID that identifies this order"
         },
-        "date" : {
-          "type" : "string",
-          "description" : "Date in ISO-8651 format (2007-03-01T13:00:00Z)"
+        "date": {
+          "type": "string",
+          "description": "Date in ISO-8651 format (2007-03-01T13:00:00Z)"
         },
-        "products" : {
-          "type" : "array",
-          "description" : "List of products that compose this order",
-          "items" : {
-            "$ref" : "#/definitions/#definitions/ProductResponse"
+        "products": {
+          "type": "array",
+          "description": "List of products that compose this order",
+          "items": {
+            "$ref": "#definitions/ProductResponse"
           }
         }
       }
