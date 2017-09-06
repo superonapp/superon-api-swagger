@@ -1,8 +1,13 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : "0.0.1",
-    "title" : "Superon API"
+    "description" : "This API allows access to SuperOn's e-commerce platform. For more information on SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.\nThis API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. ",
+    "version" : "3.0.0",
+    "title" : "SuperOn API",
+    "license" : {
+      "name" : "Superon API Terms of Use",
+      "url" : "http://lifeapps.com.br/superon/api-usage-license"
+    }
   },
   "host" : "superon.lifeapps.com.br:3000",
   "basePath" : "/api/v3",
@@ -12,6 +17,7 @@
   "paths" : {
     "/orders/ready-to-deliver" : {
       "get" : {
+        "tags" : [ "Order Cicle" ],
         "description" : "Returns orders in the state \"Ready to Deliver\"",
         "operationId" : "get-all-orders-ready-to-deliver",
         "parameters" : [ ],
@@ -20,6 +26,27 @@
             "description" : "Success",
             "schema" : {
               "$ref" : "#/definitions/OrdersResponse"
+            }
+          },
+          "default" : {
+            "description" : "Error",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/price/batch" : {
+      "get" : {
+        "tags" : [ "Configuration" ],
+        "description" : "Provides batch update for prices on a certain supplier",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleOk"
             }
           },
           "default" : {
@@ -43,6 +70,14 @@
     }
   },
   "definitions" : {
+    "SimpleOk" : {
+      "properties" : {
+        "ok" : {
+          "type" : "boolean",
+          "description" : "Will return \"true\" once the batch has been accepted for processing. This is processing is asyncronous/non-blocking"
+        }
+      }
+    },
     "ErrorResponse" : {
       "required" : [ "message" ],
       "properties" : {
@@ -81,7 +116,7 @@
           "type" : "array",
           "description" : "List of products that compose this order",
           "items" : {
-            "$ref" : "#/definitions/#definitions/ProductResponse"
+            "$ref" : "#/definitions/ProductResponse"
           }
         }
       }
