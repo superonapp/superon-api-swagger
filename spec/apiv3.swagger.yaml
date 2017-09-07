@@ -2,16 +2,16 @@ swagger: '2.0'
 info:
   version: 3.0.0
   title: SuperOn API V3
-  
-  
   description:
-    Version 3 (Caramel Sauce)
+    Version 3 (Caramel Cockatoo)
    
    --
    
     This API allows access to SuperOn's e-commerce platform. 
     
     This API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. 
+    
+    If you need, grab this api descriptor at https://goo.gl/Pm7rCg
     
     For more information about SuperOn, see http://lifeapps.com.br/superon or send us a message at contato@lifeapps.com.br.
     
@@ -168,14 +168,33 @@ definitions:
   #  #  #  #  #  #
   OrdersResponse:
     properties: 
-      numorder:
-        type: number
       idorder:
         type: string
         description: "A UUID_v4 that identifies this order. See the model UUID_v4."
+      numorder:
+        type: number
+        description: "A human friendly number that can also be used to reference this order."
       date:
         type: string
         description: "The order date. It's set when the user submits a purchase and is not altered after that. See the model Date_ISO_8801 for more info"
+      ordertotal:
+        type: number
+        description: "A total for this order, not taking into account the fees and discounts"
+      deliveryfee:
+        type: number
+        description: "A fee that can optionally be added by the supplier"
+      discounttotal:
+        type: number
+        description: "Total given in discount for this order"
+      netvalue:
+        type: number
+        description: "The total net value calculated for this product. This is the amount the customer will be charged upon delivery"
+      cpf:
+        type: number
+        description: "A CPF record number, without dots (.) or dashes (-)"
+      idcliente:
+        type: string
+        description: "A UUID_v4 that identifies this client. See the model UUID_v4."
       products:
         type: "array"
         description: "List of products that compose this order"
