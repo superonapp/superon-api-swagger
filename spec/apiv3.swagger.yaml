@@ -84,7 +84,7 @@ security:
 definitions:
   UUID_v4:
     type: string
-    description: "UUID stands for Universally Unique IDentifier. They are defined under RFC 4122 (ietf.org/rfc/rfc4122.txt)
+    description: "Documentation only model. UUID stands for Universally Unique IDentifier. They are defined under RFC 4122 (ietf.org/rfc/rfc4122.txt)
     
       This type is used repeatly throughout this API to identify all the major entities. As per the JSON specification, it should be transmitted as a string.
       
@@ -93,7 +93,7 @@ definitions:
   Date_ISO_8801:
     type: string
     description: 
-      "Date in ISO-8601 format (2007-03-01T13:00:00Z or 2007-03-01T10:00:00-03:00). As per the JSON specification, it should be transmitted as a string. Note that the timezone is specified in this format and the API will use BST (Brazilian Standart Time) if necessary. You should convert for the desired timezone and make sure to store this extra piece of information aproprietly if necessary. 
+      "Documentation only model. Date in ISO-8601 format (2007-03-01T13:00:00Z or 2007-03-01T10:00:00-03:00). As per the JSON specification, it should be transmitted as a string. Note that the timezone is specified in this format and the API will use BST (Brazilian Standart Time) if necessary. You should convert for the desired timezone and make sure to store this extra piece of information aproprietly if necessary. 
       Relevant specification can be found at www.w3.org/TR/NOTE-datetime and ietf.org/rfc/rfc3339.txt
       
       Example: These two dates represent the same moment in time. Both are valid for this API:
@@ -101,9 +101,14 @@ definitions:
       - 2007-03-01T13:00:00Z = 01/jan/2007 at 1pm, Greenwich Mean Time (+0)
       
       - 2007-03-01T10:00:00-03 = 01/jan/2007 at 10am, Brazilian Standart Time (-3)
-      
-    
       "
+  
+  #  #  #  #  #  #
+  Product_Unit:
+    type: string
+    description: "Documentation only model. The unit used to count the product being ordered. Supported units are: "
+    enum: [KG, UN]
+  
   #  #  #  #  #  #
   SimpleOk:
     properties:
@@ -126,8 +131,34 @@ definitions:
   #  #  #  #  #  #
   ProductResponse:
     properties:
+      barcode: 
+        type: string
+        description: A common barcode to identify the product.
+      internalcode: 
+        type: "string"
+        description: An internal code to identity products that don't have a barcode. A product will have either a barcode or a internalcode, never both or none.
+      maxitensperorder: 
+        type: number
+        description: This is the current configuration for how many of this very product is allowed to order in the same purchase. This should be observer with the unit.
       idproduct: 
         type: string
+        description: "A UUID_v4 that identifies this product. See the model UUID_v4."
+      price: 
+        type: number
+        description: The price for this product in the moment of the purchase
+      quantity: 
+        type: number
+        description: How many/how much of this item was ordered
+      netvalue: 
+        type: number
+        description: The net value for this ammount and price of product (quantity * price)
+      description: 
+        type: string
+        description: An arbitrary description for the product. This is what the customer sees in the e-commerce
+      unit: 
+        type: string
+        description: A unit to mease the quantity/ammount in witch this product is traded. See the model Product_Unit for further detail
+        enum: [KG, UN]
   
   #  #  #  #  #  #
   OrdersResponse:
