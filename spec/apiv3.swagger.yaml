@@ -82,11 +82,36 @@ security:
   - Bearer: []
   
 definitions:
+  UUID_v4:
+    type: string
+    description: "UUID stands for Universally Unique IDentifier. They are defined under RFC 4122 (ietf.org/rfc/rfc4122.txt)
+    
+      This type is used repeatly throughout this API to identify all the major entities. As per the JSON specification, it should be transmitted as a string.
+      
+      Example: 64997676-3b65-4711-bdc8-2b915a12551f"
+  
+  Date_ISO_8801:
+    type: string
+    description: 
+      "Date in ISO-8601 format (2007-03-01T13:00:00Z or 2007-03-01T10:00:00-03:00). As per the JSON specification, it should be transmitted as a string. Note that the timezone is specified in this format and the API will use BST (Brazilian Standart Time) if necessary. You should convert for the desired timezone and make sure to store this extra piece of information aproprietly if necessary. 
+      Relevant specification can be found at www.w3.org/TR/NOTE-datetime and ietf.org/rfc/rfc3339.txt
+      
+      Example: These two dates represent the same moment in time. Both are valid for this API:
+      
+      - 2007-03-01T13:00:00Z = 01/jan/2007 at 1pm, Greenwich Mean Time (+0)
+      
+      - 2007-03-01T10:00:00-03 = 01/jan/2007 at 10am, Brazilian Standart Time (-3)
+      
+    
+      "
+  #  #  #  #  #  #
   SimpleOk:
     properties:
       ok:
         type: boolean
         description: 'Will return "true" once the batch has been accepted for processing. This is processing is asyncronous/non-blocking'
+
+  #  #  #  #  #  #
   ErrorResponse:
     required:
       - message
@@ -97,25 +122,31 @@ definitions:
         type: number
       cause:
         type: string
+  
+  #  #  #  #  #  #
   ProductResponse:
     properties:
       idproduct: 
         type: string
+  
+  #  #  #  #  #  #
   OrdersResponse:
     properties: 
       numorder:
         type: number
       idorder:
         type: string
-        description: "A UUID that identifies this order"
+        description: "A UUID_v4 that identifies this order. See the model UUID_v4."
       date:
         type: string
-        description: "Date in ISO-8651 format (2007-03-01T13:00:00Z)"
+        description: "The order date. It's set when the user submits a purchase and is not altered after that. See the model Date_ISO_8801 for more info"
       products:
         type: "array"
         description: "List of products that compose this order"
         items:
             $ref: "#/definitions/ProductResponse"
+
+  #  #  #  #  #  #
   PriceBatchRequest:
     properties:
       notes:
@@ -126,6 +157,8 @@ definitions:
         minimum: 1
         items:
           $ref: '#/definitions/PriceBatchItemRequest'
+          
+  #  #  #  #  #  #
   PriceBatchItemRequest:
     description: Represents a price update for that product. Send EITHER the internalcode or the barcode. If a product has a barcode, that should be used.
     properties:
