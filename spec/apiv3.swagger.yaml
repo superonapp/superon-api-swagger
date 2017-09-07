@@ -1,9 +1,14 @@
 swagger: '2.0'
 info:
   version: 3.0.0
-  title: SuperOn API
+  title: SuperOn API V3
+  
   
   description:
+    Version 3 (Caramel Sauce)
+   
+   --
+   
     This API allows access to SuperOn's e-commerce platform. 
     
     This API will evolve incrementaly under this major version maintaining backward compatibility. That means that new keys may be added to the objects bellow and you should foresee that. The object keys, once provided, won't be removed or have their type modified in the same major API version. 
