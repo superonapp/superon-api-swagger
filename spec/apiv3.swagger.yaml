@@ -15,7 +15,7 @@ info:
     url: 'http://lifeapps.com.br/superon/api-usage-license'
   contact:
     email: contato@lifeapps.com.br
-host: 'superon.lifeapps.com.br:3000'
+host: 'localhost:3000'
 basePath: '/api/v3'
 
 schemes:
@@ -46,7 +46,8 @@ paths:
     post:
       tags:
         - "Configuration"
-      description: 'Provides batch update for prices on a certain supplier'
+      description: 'Provides batch update for prices on a certain supplier. This allows 
+      multiple products to be updated and the total payload should have less than 1Mb.'
       parameters:
        - name: body
          in: body
@@ -54,8 +55,6 @@ paths:
          description: A batch for price update. This should contain at least one item. This is an async operation and will process in some moment in the future.
          schema:
           $ref: '#/definitions/PriceBatchRequest'
-            
-        
             
       responses:
         '200':
@@ -79,6 +78,9 @@ securityDefinitions:
       contato@lifeapps.com.br for further instructions
       The following syntax must be used in the 'Authorization' header 
           "Bearer xxxxxx.yyyyyyy.zzzzzz"
+security: 
+  - Bearer: []
+  
 definitions:
   SimpleOk:
     properties:
