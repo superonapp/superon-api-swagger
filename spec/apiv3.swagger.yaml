@@ -218,7 +218,7 @@ definitions:
     description: Represents a price update for that product. Send EITHER the internalcode or the barcode. If a product has a barcode, that should be used.
     properties:
       internalcode:
-        type: number
+        type: string
         description: A product internal code. This exists for products that do not have a common barcode
       barcode:
         type: number
