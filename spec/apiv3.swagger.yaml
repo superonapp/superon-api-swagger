@@ -229,7 +229,9 @@ definitions:
       availablefororder:
         type: boolean
         description: Determines if this product should be made available for final consumers (true) or if it should be hidden and made unavailable until further updates
-            
+      maxitemperorder:
+        type: number
+        description: "(optional) the maximum number of items that can be ordered at once (in a single order)"
             
             
             

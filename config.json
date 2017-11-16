@@ -1,0 +1,6 @@
+{
+  "apiPackage" : "br.com.superon.apiv3",
+  "groupId":"br.com.superon",
+  "artifactId":"apiv3",
+  "artifactVersion":"3.0.0"
+}
