@@ -221,7 +221,7 @@ definitions:
         type: string
         description: A product internal code. This exists for products that do not have a common barcode
       barcode:
-        type: number
+        type: string
         description: A product barcode
       price:
         type: number
